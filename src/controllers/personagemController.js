@@ -2,9 +2,21 @@ import dados from "../models/dados.js";
 const { personagens } = dados;
 
 const getAllPersonagens = (req, res) => {
+    const {nome,  tipo, anoFabricacao} = req.query;
+
+    let resultado = personagens
+
+     if(nome) {
+        resultado = resultado.filter((p) => p.nome.toLocaleLowerCase().includes(nome.toLocaleLowerCase()));
+    }
+
+     if(tipo) {
+        resultado = resultado.filter((p) => p.tipo.toLocaleLowerCase().includes(tipo.toLocaleLowerCase()));
+    }
+    
     res.status(200).json({
-        total: personagens.length,
-        barbies: personagens
+        total: resultado.length,
+        barbies: resultado
     })
 }
 
